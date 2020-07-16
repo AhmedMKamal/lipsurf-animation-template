@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <transition name="slide-right-left">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+};
 </script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 1rem;
+  position: relative;
+}
+.slide-right-left-enter-to,
+.slide-right-left-leave-to {
+  transition: all 1s cubic-bezier(0.67, 0.59, 0.76, 0.42) 0.3s;
+}
+.slide-right-left-enter-active {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.slide-right-left-leave-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-right-left-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-right-left-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 </style>
