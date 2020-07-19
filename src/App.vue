@@ -1,42 +1,43 @@
 <template>
   <div id="app">
-    <transition name="slide-right-left">
-      <router-view></router-view>
-    </transition>
+    <main id="main">
+      <transition name="slide-left-right">
+        <router-view />
+      </transition>
+    </main>
   </div>
 </template>
 
-<script>
-export default {
-  name: "App",
-};
-</script>
-
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 1rem;
+}
+
+#main {
   position: relative;
 }
-.slide-right-left-enter-to,
-.slide-right-left-leave-to {
+
+.slide-left-right-enter-to,
+.slide-left-right-leave-to {
   transition: all 1s cubic-bezier(0.67, 0.59, 0.76, 0.42) 0.3s;
 }
-.slide-right-left-enter-active {
+.slide-left-right-enter-active {
   transform: translateX(100%);
   opacity: 0;
 }
-.slide-right-left-leave-active {
+.slide-left-right-leave-active {
   transform: translateX(0);
   opacity: 1;
 }
-.slide-right-left-enter-to {
+.slide-left-right-enter-to {
   transform: translateX(0);
   opacity: 1;
 }
-.slide-right-left-leave-to {
+.slide-left-right-leave-to {
   transform: translateX(-100%);
   opacity: 0;
 }
