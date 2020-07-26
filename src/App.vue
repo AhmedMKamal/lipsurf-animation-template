@@ -1,40 +1,72 @@
 <template>
-  <div id="app">
-    <main id="main">
-      <transition :name="routerAnimation">
-        <router-view />
-      </transition>
-    </main>
-  </div>
+  <main>
+    <transition :name="routerAnimation">
+      <Slider :key="currentSlideName">
+        <component
+          v-bind:is="currentSlideName"
+          :slideName="currentSlideName"
+          :onNext="onNextSlide"
+          :onPrevious="onPreviousSlide"
+        />
+      </Slider>
+    </transition>
+  </main>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RouterDirection } from '@/store'
+import { SlideName } from '@/constants/SlideName'
+import { SlideDirection } from '@/constants/SlideDirection'
+import Slider from '@/components/Slider.vue'
+import ActivatingSlide from '@/views/ActivatingSlide.vue'
+import ScrollingSlide from '@/views/ScrollingSlide.vue'
+import ClickingSlide from '@/views/ClickingSlide.vue'
+import GettingHelpSlide from '@/views/GettingHelpSlide.vue'
 
-@Component({ name: 'App' })
+@Component({
+  components: {
+    Slider,
+    [SlideName.ActivatingSlide]: ActivatingSlide,
+    [SlideName.ScrollingSlide]: ScrollingSlide,
+    [SlideName.ClickingSlide]: ClickingSlide,
+    [SlideName.GettingHelpSlide]: GettingHelpSlide
+  }
+})
 export default class App extends Vue {
+  private currentSlideName = SlideName.ActivatingSlide
+  private slideDirection = SlideDirection.Forward
+
+  private static get slideNames (): string[] {
+    return Object.values(SlideName)
+  }
+
   private get routerAnimation (): string {
-    return this.$store.state.routerDirection === RouterDirection.Forward
+    return this.slideDirection === SlideDirection.Forward
       ? 'slide-right-left'
       : 'slide-left-right'
+  }
+
+  private get currentSlideIndex (): number {
+    return App.slideNames.indexOf(this.currentSlideName)
+  }
+
+  private onNextSlide (): void {
+    if (this.currentSlideIndex < App.slideNames.length) {
+      this.slideDirection = SlideDirection.Forward
+      this.currentSlideName = App.slideNames[this.currentSlideIndex + 1]
+    }
+  }
+
+  private onPreviousSlide (): void {
+    if (this.currentSlideIndex) {
+      this.slideDirection = SlideDirection.Backward
+      this.currentSlideName = App.slideNames[this.currentSlideIndex - 1]
+    }
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#main {
-  position: relative;
-}
-
 .slide-right-left-enter-to,
 .slide-right-left-leave-to,
 .slide-left-right-enter-to,
