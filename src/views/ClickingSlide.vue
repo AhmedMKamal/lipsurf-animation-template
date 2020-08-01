@@ -1,5 +1,5 @@
 <template>
-  <Slide :name="slideName">
+  <div>
     <h1>CLICKING</h1>
     <p>There are two ways to click links or buttons, and focus text boxes:</p>
     <ol>
@@ -18,26 +18,20 @@
       Times clicked:
       <span>0</span>
     </p>
-    <button @click="onPrevious">Previous</button>
-    <button @click="onNext">Next</button>
-  </Slide>
+    <button @click="previousSlide">Previous</button>
+    <button @click="nextSlide">Next</button>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import Slide from '@/components/Slide.vue'
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({
-  components: { Slide }
-})
+@Component
 export default class ClickingSlide extends Vue {
   @Prop({ required: true })
-  private readonly slideName!: string
+  private readonly nextSlide!: () => void;
 
   @Prop({ required: true })
-  private readonly onNext!: () => void
-
-  @Prop({ required: true })
-  private readonly onPrevious!: () => void
+  private readonly previousSlide!: () => void;
 }
 </script>

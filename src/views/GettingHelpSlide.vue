@@ -1,5 +1,5 @@
 <template>
-  <Slide :name="slideName">
+  <div>
     <h1>GETTING HELP</h1>
     <p>
       Forgot to turn off tags? Say
@@ -17,22 +17,16 @@
       hovering overlay when you enter the mode; like when you ran the auto
       scroll command in the scrolling section of the tutorial.
     </p>
-    <button @click="onPrevious">Previous</button>
-  </Slide>
+    <button @click="previousSlide">Previous</button>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import Slide from '@/components/Slide.vue'
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({
-  components: { Slide }
-})
+@Component
 export default class GettingHelpSlide extends Vue {
   @Prop({ required: true })
-  private readonly slideName!: string
-
-  @Prop({ required: true })
-  private readonly onPrevious!: () => void
+  private readonly previousSlide!: () => void;
 }
 </script>
