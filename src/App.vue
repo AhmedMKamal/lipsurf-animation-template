@@ -1,27 +1,32 @@
 <template>
-  <lip-surf-slider :sliderRef="setSliderControllerRef">
-    <!--
+  <div id="app">
+    <lip-surf-slider :sliderRef="setSliderControllerRef">
+      <!--
       Here we're registering our slides to the slider component
       it's important that we use template element with a unique
       v-slot:<name> for each slide...
-    -->
+      -->
 
-    <template v-slot:activating>
-      <activating-slide :nextSlide="nextSlide" />
-    </template>
+      <template v-slot:activating>
+        <activating-slide :nextSlide="nextSlide" />
+      </template>
 
-    <template v-slot:scrolling>
-      <scrolling-slide :nextSlide="nextSlide" :previousSlide="previousSlide" />
-    </template>
+      <template v-slot:scrolling>
+        <scrolling-slide
+          :nextSlide="nextSlide"
+          :previousSlide="previousSlide"
+        />
+      </template>
 
-    <template v-slot:clicking>
-      <clicking-slide :nextSlide="nextSlide" :previousSlide="previousSlide" />
-    </template>
+      <template v-slot:clicking>
+        <clicking-slide :nextSlide="nextSlide" :previousSlide="previousSlide" />
+      </template>
 
-    <template v-slot:getting-help>
-      <getting-help-slide :previousSlide="previousSlide" />
-    </template>
-  </lip-surf-slider>
+      <template v-slot:getting-help>
+        <getting-help-slide :previousSlide="previousSlide" />
+      </template>
+    </lip-surf-slider>
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,3 +64,13 @@ export default class App extends Vue {
   }
 }
 </script>
+
+<style scoped>
+#app {
+  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 1rem;
+}
+</style>

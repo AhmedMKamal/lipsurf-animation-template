@@ -11,6 +11,30 @@
       <li>Scroll Right</li>
       <li>Auto Scroll</li>
     </ul>
+    <div>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+      <p>scrolling...</p>
+    </div>
     <button @click="previousSlide">Previous</button>
     <button @click="nextSlide">Next</button>
   </div>
