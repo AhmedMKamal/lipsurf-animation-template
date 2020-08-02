@@ -31,6 +31,7 @@ export default class SlideContainer extends Vue {
   private readonly availableDoodlesCount = 19; // assuming that the images are named numerically (1.png, 2.png, etc...).
   private previousSlotIndex = 0;
   private currentSlotIndex = 0;
+  private mappedDoodles: { [name: string]: string[] } = {};
 
   @Prop({ required: true })
   private readonly sliderRef!: (ref: SliderController) => void;
@@ -41,6 +42,7 @@ export default class SlideContainer extends Vue {
         next: this.next.bind(this),
         previous: this.previous.bind(this)
       });
+    this.mapDoodlesToSlots();
   }
 
   private get slotNames(): string[] {
@@ -52,10 +54,24 @@ export default class SlideContainer extends Vue {
     return hasNext ? this.slotNames[this.currentSlotIndex] : "";
   }
 
+  private get currentSlotDoodles(): string[] {
+    return this.mappedDoodles[this.currentSlotName] || [];
+  }
+
   private get transitionName(): string {
     return this.currentSlotIndex > this.previousSlotIndex
       ? "slide-right-left"
       : "slide-left-right";
+  }
+
+  private mapDoodlesToSlots(): void {
+    this.mappedDoodles = this.slotNames.reduce(
+      (obj, name) =>
+        Object.assign(obj, {
+          [name]: [this.getRandomDoodle(), this.getRandomDoodle()]
+        }),
+      {}
+    );
   }
 
   private getRanIntFromInterval(min: number, max: number): number {
@@ -73,7 +89,7 @@ export default class SlideContainer extends Vue {
     return {
       top: `${this.getRanIntFromInterval(5, 30)}%`,
       left: `${this.getRanIntFromInterval(5, 30)}%`,
-      backgroundImage: `url(${this.getRandomDoodle()})`
+      backgroundImage: `url(${this.currentSlotDoodles[0]})`
     };
   }
 
@@ -81,7 +97,7 @@ export default class SlideContainer extends Vue {
     return {
       top: `${this.getRanIntFromInterval(50, 70)}%`,
       left: `${this.getRanIntFromInterval(40, 70)}%`,
-      backgroundImage: `url(${this.getRandomDoodle()})`
+      backgroundImage: `url(${this.currentSlotDoodles[1]})`
     };
   }
 
@@ -217,7 +233,7 @@ export default class SlideContainer extends Vue {
 }
 
 .doodles-container {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
 }
